@@ -10,9 +10,6 @@ hero:
     - theme: brand
       text: Revue de code
       link: /revue-de-code
-    - theme: alt
-      text: API Examples
-      link: /api-examples
 
 features:
   - title: Choix de Pokémon diversifié
