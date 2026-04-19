@@ -4,7 +4,7 @@ const base = "/appweb-tp2-doc/"
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base,
+  base: base,
   title: "TP2-Doc",
   description: "Application de combat Pokémon",
   themeConfig: {
