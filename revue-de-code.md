@@ -292,6 +292,38 @@ La récursivité n'est pas nécessaire dans ce cas là, on pourrait tout simplem
 :::
 
 ```js{4}
+function attack() {
+  if (!pokemonSelected.value || !currentTrainer.value?.pokemon) return
+
+  disableTrigger.value += 1
+  if (Math.floor(Math.random() * 101) <= Experience[4].accuracy) {
+    damagePokemon(currentTrainer.value.pokemon)
+
+    if (currentTrainer.value.pokemon.currentHp! <= 0)
+      nbPokedollars.value += currentTrainer.value?.reward!;
+  }
+  counterAttack()
+}
+
+async function counterAttack() {
+  if (!currentTrainer.value?.pokemon) return
+
+  await delay(750)
+  disableTrigger.value -= 1
+  const exp =
+    Experience[currentTrainer.value.experience as keyof typeof Experience]
+
+  if (Math.floor(Math.random() * 101) <= exp.accuracy) {
+    damagePokemon(pokemonSelected.value)
+  }
+}
+```
+
+::: info
+J'ai séparé l'attaque et la contre-attaque en deux fonctions différentes pour réduire le nombre de if
+:::
+
+```js{4}
 function damagePokemon(attacker: Pokemon, defender: Pokemon){
   if(!attacker || !defender) return
 
@@ -305,6 +337,14 @@ S'occupe d'infliger les dégâts au bon pokémon
 :::
 ::: warning
 L'attaquant n'est littérallement pas utilisé... pourquoi il est là le bonhomme???
+:::
+
+```js{4}
+function damagePokemon(pokemon: Pokemon)
+```
+
+::: info
+Problème réglé
 :::
 
 ```js{4}
@@ -364,6 +404,16 @@ Transformer un nombre en une expérience
 :::
 ::: tip
 Je penses pas que c'est nécessaire, il doit y avoir un moyen de le faire sans
+:::
+
+```js{4}
+<p v-if="currentTrainer">
+  Expérience:
+  {{ Experience[currentTrainer?.experience as keyof typeof Experience].experience }}
+</p>
+```
+::: info
+Il suffisait d'utiliser cette ligne pour accéder à l'expérience du dresseur. J'ai supprimé la méthode getTrainerExperience puisqu'elle n'est plus nécessaire
 :::
 
 ```js{4}
@@ -510,6 +560,7 @@ S'occupe d'afficher seulement le bouton désiré. Il y en a tout le temps qu'un 
       </li>
     </ul>
 ```
+
 ::: info
 Affiche la liste des 5 pokémons choisi avec leurs informations
 :::
@@ -524,6 +575,7 @@ Affiche la liste des 5 pokémons choisi avec leurs informations
       confirmButton="Quitter sans sauvergarder"
     />
 ```
+
 ::: info
 Modal de confirmation pour s'assurer que le joueur veut réellement quitter la partie en sachant qu'il va perdre la progresssion
 :::
