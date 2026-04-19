@@ -1,1 +1,0 @@
-base: "/doc-tp2"

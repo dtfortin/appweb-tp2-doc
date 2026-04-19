@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/appweb-tp2-doc/",
   title: "TP2-Doc",
   description: "Application de combat Pokémon",
   themeConfig: {
